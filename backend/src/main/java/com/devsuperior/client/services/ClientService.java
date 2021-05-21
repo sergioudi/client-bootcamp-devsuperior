@@ -1,5 +1,7 @@
 package com.devsuperior.client.services;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +21,18 @@ public class ClientService {
 	
 	@Transactional
 	public Page<ClientDTO> findAllPaged(PageRequest pageRequest) {
-		
 	    Page<Client> page = repository.findAll(pageRequest);
-	    
 	    return page.map(client -> new ClientDTO(client));
 	}
+	
+	@Transactional
+	public Optional<ClientDTO> findById(Long id) {
+	    Optional<Client> obj = repository.findById(id);
+	    
+	    if (!obj.isPresent()) {
+	    	return Optional.empty();
+	    }
+        return Optional.of(new ClientDTO(obj.get()));
+	}
+	
 }
