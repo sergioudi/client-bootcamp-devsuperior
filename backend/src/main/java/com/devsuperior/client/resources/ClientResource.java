@@ -35,7 +35,7 @@ public class ClientResource {
 			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy
 	    	) {
 		
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction.toUpperCase()),orderBy.toLowerCase());
 		
 		Page<ClientDTO> list = service.findAllPaged(pageRequest);
 		return ResponseEntity.ok().body(list);
